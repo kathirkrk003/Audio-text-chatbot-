@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text & Audio Chatbot</title>
+</head>
+<body style="font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding-top: 50px; background-color: #f0f2f5;">
+
+    <h1>KRK Text & Audio Chatbot</h1>
+
+    <div id="chatBox" style="border:1px solid #ccc; padding:15px; width: 400px; height:350px; overflow-y:auto; background:white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        </div>
+
+    <br>
+
+    <div style="width: 430px; display: flex; gap: 5px;">
+        <input type="text" id="userInput" placeholder="Type here..." style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+        <button onclick="sendMessage()" style="padding: 10px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 5px;">Send</button>
+        <button onclick="startVoice()" style="padding: 10px; cursor: pointer; background: #28a745; color: white; border: none; border-radius: 5px;">🎤 Speak</button>
+    </div>
+
+<script>
+const replies = {
+    "hi": "Hello 👋 Nice to meet you!",
+    "hello": "Hi there 👋",
+    "how are you": "I am doing great 😊 What about you?",
+    "what is your name": "I am your Text and Audio Chatbot 🤖",
+    "who are you": "I am a simple chatbot created using JavaScript",
+    "help": "You can type or speak. I can reply with voice 🔊",
+    "bye": "Goodbye 👋 Have a great day!",
+    "thank you": "You're welcome 😊",
+    "good morning": "Good morning ☀️ Have a nice day!",
+    "good night": "Good night 🌙 Sweet dreams!",
+    "how old are you": "I don't have an age, but I'm always learning",
+    "where are you from": "I live inside your browser 🌐",
+    "what can you do": "I can chat with you using text and voice",
+    "who is the krk": "KRK is my boss, kr.kathir", // Fixed syntax here
+
+    // Computer Basics
+    "what is computer": "A computer is an electronic device that processes data.",
+    "what is hardware": "Hardware refers to physical parts of a computer.",
+    "what is software": "Software is a set of instructions that tells a computer what to do.",
+    "what is operating system": "An operating system manages computer hardware and software.",
+    "examples of operating system": "Windows, Linux, macOS, Android are operating systems.",
+
+    // Programming Basics
+    "what is programming": "Programming is writing instructions for a computer.",
+    "what is coding": "Coding is the process of writing computer programs.",
+    "what is algorithm": "An algorithm is a step-by-step procedure to solve a problem.",
+    "what is flowchart": "A flowchart is a diagram that represents an algorithm.",
+    "what is debugging": "Debugging is the process of fixing errors in a program.",
+
+    // Languages
+    "what is python": "Python is a high-level, easy-to-learn programming language.",
+    "what is java": "Java is an object-oriented programming language.",
+    "what is c language": "C is a powerful procedural programming language.",
+    "what is javascript": "JavaScript is a scripting language used for web development.",
+    "what is html": "HTML is used to create web page structure.",
+    "what is css": "CSS is used to style web pages.",
+
+    // Web Development
+    "what is frontend": "Frontend is the user interface part of a website.",
+    "what is backend": "Backend handles server, database, and logic.",
+    "what is full stack": "Full stack means both frontend and backend development.",
+    "what is website": "A website is a collection of web pages on the internet.",
+    "what is browser": "A browser is used to access websites.",
+
+    // Database
+    "what is database": "A database stores organized data.",
+    "what is sql": "SQL is used to manage databases.",
+    "what is table": "A table stores data in rows and columns.",
+    "what is primary key": "A primary key uniquely identifies a record.",
+    "what is foreign key": "A foreign key links two tables.",
+
+    // Networking
+    "what is internet": "The internet connects computers globally.",
+    "what is ip address": "An IP address identifies a device on a network.",
+    "what is server": "A server provides services to clients.",
+    "what is client": "A client requests services from a server.",
+    "what is http": "HTTP is a protocol for web communication.",
+    "what is https": "HTTPS is a secure version of HTTP.",
+
+    // AI & ML
+    "what is ai": "AI stands for Artificial Intelligence. It enables machines to think and act like humans.",
+    "what is machine learning": "Machine learning allows systems to learn from data.",
+    "what is deep learning": "Deep learning uses neural networks with multiple layers.",
+    "what is data science": "Data science analyzes data to find insights.",
+    "what is chatbot": "A chatbot is a program that talks with users.",
+
+    // AI Details
+    "types of ai": "Types of AI are Narrow AI, General AI, and Super AI.",
+    "examples of ai": "Examples of AI include chatbots, face recognition, and voice assistants.",
+    "goal of ai": "The main goal of AI is to solve problems intelligently.",
+
+    // Machine Learning Details
+    "types of machine learning": "Supervised, Unsupervised, and Reinforcement learning are types of ML.",
+    "what is supervised learning": "Supervised learning uses labeled data to train models.",
+    "what is unsupervised learning": "Unsupervised learning finds patterns in unlabeled data.",
+    "what is reinforcement learning": "Reinforcement learning learns by reward and punishment.",
+
+    // Algorithms
+    "what is linear regression": "Linear regression predicts continuous values.",
+    "what is logistic regression": "Logistic regression is used for classification problems.",
+    "what is decision tree": "A decision tree is a tree-like model for decisions.",
+    "what is random forest": "Random forest is an ensemble of multiple decision trees.",
+
+    // Tools & Libraries
+    "what is numpy": "NumPy is used for numerical computations.",
+    "what is pandas": "Pandas is used for data manipulation.",
+    "what is matplotlib": "Matplotlib is used for data visualization.",
+    "what is tensorflow": "TensorFlow is a deep learning framework."
+};
+
+function sendMessage() {
+    const input = document.getElementById("userInput");
+    const chatBox = document.getElementById("chatBox");
+    const userText = input.value.trim();
+
+    if (userText === "") return;
+
+    // Display User message
+    chatBox.innerHTML += `
+        <div style="text-align:right; margin:10px;">
+            <span style="background:#dcf8c6; padding:8px 12px; border-radius:15px; display: inline-block; max-width: 70%;">
+                ${userText}
+            </span>
+        </div>
+    `;
+
+    const text = userText.toLowerCase();
+    let botReply = "Sorry, I didn't understand 😅";
+
+    // Find reply from object
+    for (let key in replies) {
+        if (text.includes(key)) {
+            botReply = replies[key];
+            break;
+        }
+    }
+
+    // Display Bot message
+    chatBox.innerHTML += `
+        <div style="text-align:left; margin:10px;">
+            <span style="background:#eeeeee; padding:8px 12px; border-radius:15px; display: inline-block; max-width: 70%;">
+                ${botReply}
+            </span>
+        </div>
+    `;
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    // 🔊 Bot voice output
+    window.speechSynthesis.cancel();
+    const speech = new SpeechSynthesisUtterance(botReply);
+    speech.lang = "en-US";
+    window.speechSynthesis.speak(speech);
+
+    input.value = "";
+}
+
+// Allow "Enter" key to send message
+document.getElementById("userInput").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        sendMessage();
+    }
+});
+
+// 🎤 Voice Input
+function startVoice() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+        alert("Voice recognition not supported in this browser");
+        return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.start();
+
+    recognition.onresult = function (event) {
+        document.getElementById("userInput").value = event.results[0][0].transcript;
+        sendMessage();
+    };
+
+    recognition.onerror = function () {
+        alert("Voice error. Please try again.");
+    };
+}
+</script>
+</body>
+</html>
