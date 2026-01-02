@@ -3,113 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text & Audio Chatbot</title>
+    <title>Advanced AI Knowledge Chatbot</title>
 </head>
-<body style="font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding-top: 50px; background-color: #f0f2f5;">
+<body style="font-family: 'Segoe UI', Arial, sans-serif; display: flex; flex-direction: column; align-items: center; padding: 40px; background-color: #e5e7eb;">
 
-    <h1>KRK Text & Audio Chatbot</h1>
+    <h1 style="color: #1f2937; margin-bottom: 10px;">KRK Tech & AI Knowledge Bot</h1>
+    <p style="color: #6b7280; margin-bottom: 20px;">Ask me about Programming, AI, Networking, or Databases!</p>
 
-    <div id="chatBox" style="border:1px solid #ccc; padding:15px; width: 400px; height:350px; overflow-y:auto; background:white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <div id="chatBox" style="border: 1px solid #d1d5db; padding: 20px; width: 450px; height: 450px; overflow-y: auto; background: white; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);">
+        <div style="text-align:left; margin-bottom: 15px;">
+            <span style="background:#f3f4f6; padding:10px 14px; border-radius:15px; display: inline-block; color: #374151;">
+                Hello! I am your AI assistant. How can I help you today? 🤖
+            </span>
         </div>
+    </div>
 
-    <br>
-
-    <div style="width: 430px; display: flex; gap: 5px;">
-        <input type="text" id="userInput" placeholder="Type here..." style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-        <button onclick="sendMessage()" style="padding: 10px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 5px;">Send</button>
-        <button onclick="startVoice()" style="padding: 10px; cursor: pointer; background: #28a745; color: white; border: none; border-radius: 5px;">🎤 Speak</button>
+    <div style="width: 490px; display: flex; gap: 10px; margin-top: 20px;">
+        <input type="text" id="userInput" placeholder="Type a question (e.g., 'What is Deep Learning?')" style="flex: 1; padding: 12px 18px; border-radius: 30px; border: 1px solid #d1d5db; outline: none; font-size: 15px;">
+        <button onclick="sendMessage()" style="padding: 10px 20px; cursor: pointer; background: #2563eb; color: white; border: none; border-radius: 30px; font-weight: 600; transition: 0.3s;">Send</button>
+        <button onclick="startVoice()" style="padding: 10px; cursor: pointer; background: #059669; color: white; border: none; border-radius: 50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;">🎤</button>
     </div>
 
 <script>
 const replies = {
-    "hi": "Hello 👋 Nice to meet you!",
-    "hello": "Hi there ",
-    "how are you": "I am doing great  What about you?",
-    "what is your name": "I am your Text and Audio Chatbot ",
-    "who are you": "I am a simple chatbot created using JavaScript",
-    "help": "You can type or speak. I can reply with voice ",
-    "bye": "Goodbye Have a great day!",
-    "thank you": "You're welcome ",
-    "good morning": "Good morning  Have a nice day!",
-    "good night": "Good night  Sweet dreams!",
-    "how old are you": "I don't have an age, but I'm always learning",
-    "where are you from": "I live inside your browser ",
-    "what can you do": "I can chat with you using text and voice and help with you to learn about artificial intelligence",
-    "who is the krk": "KRK is my boss, kr.kathir", // Fixed syntax here
+    // Basic Greetings
+    "hi": "Hello! 👋 How can I help you today?",
+    "hello": "Hi there! Feel free to ask me any tech questions.",
+    "how are you": "I'm functioning perfectly! Ready to assist you. 😊",
+    "name": "I am your Text and Audio Chatbot, powered by JavaScript.",
+    "who are you": "I am an educational chatbot built to explain tech concepts.",
+    "krk": "KRK is my boss, kr.kathir. He is the one who created me!",
+    "bye": "Goodbye! Happy coding! 👋",
 
     // Computer Basics
-    "what is computer": "A computer is an electronic device that processes data.",
-    "what is hardware": "Hardware refers to physical parts of a computer.",
-    "what is software": "Software is a set of instructions that tells a computer what to do.",
-    "what is operating system": "An operating system manages computer hardware and software.",
-    "examples of operating system": "Windows, Linux, macOS, Android are operating systems.",
+    "computer": "A computer is an electronic device that manipulates information, or data. It has the ability to store, retrieve, and process data.",
+    "hardware": "Hardware is any physical part of the computer, such as the keyboard, mouse, and internal parts.",
+    "software": "Software is any set of instructions that tells the hardware what to do and how to do it.",
+    "operating system": "An OS manages all of the software and hardware on the computer. Examples: Windows, macOS, and Linux.",
 
-    // Programming Basics
-    "what is programming": "Programming is writing instructions for a computer.",
-    "what is coding": "Coding is the process of writing computer programs.",
-    "what is algorithm": "An algorithm is a step-by-step procedure to solve a problem.",
-    "what is flowchart": "A flowchart is a diagram that represents an algorithm.",
-    "what is debugging": "Debugging is the process of fixing errors in a program.",
-
-    // Languages
-    "what is python": "Python is a high-level, easy-to-learn programming language.",
-    "what is java": "Java is an object-oriented programming language.",
-    "what is c language": "C is a powerful procedural programming language.",
-    "what is javascript": "JavaScript is a scripting language used for web development.",
-    "what is html": "HTML is used to create web page structure.",
-    "what is css": "CSS is used to style web pages.",
+    // Programming & Languages
+    "programming": "Programming is a way to instruct the computer to perform various tasks.",
+    "algorithm": "An algorithm is a set of step-by-step instructions for solving a specific problem.",
+    "python": "Python is a high-level programming language known for its readability and great support for AI libraries.",
+    "javascript": "JavaScript is the programming language of the Web. It makes pages interactive.",
+    "html": "HTML (HyperText Markup Language) provides the structure of a webpage.",
+    "css": "CSS (Cascading Style Sheets) is used for describing the presentation and design of a webpage.",
 
     // Web Development
-    "what is frontend": "Frontend is the user interface part of a website.",
-    "what is backend": "Backend handles server, database, and logic.",
-    "what is full stack": "Full stack means both frontend and backend development.",
-    "what is website": "A website is a collection of web pages on the internet.",
-    "what is browser": "A browser is used to access websites.",
+    "frontend": "Frontend is the part of a website that users interact with directly.",
+    "backend": "Backend is the server-side of a website, managing data and logic behind the scenes.",
+    "full stack": "Full stack developers work on both the frontend and backend of an application.",
 
-    // Database
-    "what is database": "A database stores organized data.",
-    "what is sql": "SQL is used to manage databases.",
-    "what is table": "A table stores data in rows and columns.",
-    "what is primary key": "A primary key uniquely identifies a record.",
-    "what is foreign key": "A foreign key links two tables.",
+    // Database & Networking
+    "database": "A database is an organized collection of structured information, usually stored electronically.",
+    "sql": "SQL (Structured Query Language) is the standard language for relational database management.",
+    "internet": "The internet is a global network of billions of computers and other electronic devices.",
+    "ip address": "An IP address is a unique string of numbers that identifies each computer using the Internet Protocol.",
+    "http": "HTTP is the protocol used for transmitting web pages over the internet. HTTPS is the secure version.",
 
-    // Networking
-    "what is internet": "The internet connects computers globally.",
-    "what is ip address": "An IP address identifies a device on a network.",
-    "what is server": "A server provides services to clients.",
-    "what is client": "A client requests services from a server.",
-    "what is http": "HTTP is a protocol for web communication.",
-    "what is https": "HTTPS is a secure version of HTTP.",
-
-    // AI & ML
-    "what is ai": "AI stands for Artificial Intelligence. It enables machines to think and act like humans.",
-    "what is machine learning": "Machine learning allows systems to learn from data.",
-    "what is deep learning": "Deep learning uses neural networks with multiple layers.",
-    "what is data science": "Data science analyzes data to find insights.",
-    "what is chatbot": "A chatbot is a program that talks with users.",
-
-    // AI Details
-    "types of ai": "Types of AI are Narrow AI, General AI, and Super AI.",
-    "examples of ai": "Examples of AI include chatbots, face recognition, and voice assistants.",
-    "goal of ai": "The main goal of AI is to solve problems intelligently.",
-
-    // Machine Learning Details
-    "types of machine learning": "Supervised, Unsupervised, and Reinforcement learning are types of ML.",
-    "what is supervised learning": "Supervised learning uses labeled data to train models.",
-    "what is unsupervised learning": "Unsupervised learning finds patterns in unlabeled data.",
-    "what is reinforcement learning": "Reinforcement learning learns by reward and punishment.",
-
-    // Algorithms
-    "what is linear regression": "Linear regression predicts continuous values.",
-    "what is logistic regression": "Logistic regression is used for classification problems.",
-    "what is decision tree": "A decision tree is a tree-like model for decisions.",
-    "what is random forest": "Random forest is an ensemble of multiple decision trees.",
-
+    // AI, ML & Deep Learning
+    "ai": "Artificial Intelligence (AI) is the simulation of human intelligence processes by machines, especially computer systems.",
+    "machine learning": "Machine Learning is a type of AI that allows software to become more accurate in predicting outcomes without being explicitly programmed.",
+    "deep learning": "Deep Learning is a subset of Machine Learning based on artificial neural networks with multiple layers.",
+    "neural network": "Neural networks are a series of algorithms that endeavor to recognize underlying relationships in a set of data through a process that mimics the way the human brain operates.",
+    "data science": "Data science combines math, statistics, and programming to analyze data and discover insights.",
+    
     // Tools & Libraries
-    "what is numpy": "NumPy is used for numerical computations.",
-    "what is pandas": "Pandas is used for data manipulation.",
-    "what is matplotlib": "Matplotlib is used for data visualization.",
-    "what is tensorflow": "TensorFlow is a deep learning framework."
+    "numpy": "NumPy is a Python library used for working with arrays and performing mathematical operations.",
+    "pandas": "Pandas is a fast, powerful, and easy-to-use open-source data analysis and manipulation tool for Python.",
+    "tensorflow": "TensorFlow is a free and open-source software library for machine learning and artificial intelligence.",
+    "github": "GitHub is a provider of Internet hosting for software development and version control using Git."
 };
 
 function sendMessage() {
@@ -119,30 +82,31 @@ function sendMessage() {
 
     if (userText === "") return;
 
-    // Display User message
+    // Display User bubble
     chatBox.innerHTML += `
-        <div style="text-align:right; margin:10px;">
-            <span style="background:#dcf8c6; padding:8px 12px; border-radius:15px; display: inline-block; max-width: 70%;">
+        <div style="text-align:right; margin-bottom: 15px;">
+            <span style="background:#2563eb; color:white; padding:10px 14px; border-radius:15px; display: inline-block; max-width: 80%;">
                 ${userText}
             </span>
         </div>
     `;
 
-    const text = userText.toLowerCase();
-    let botReply = "Sorry, I didn't understand 😅";
+    const lowerInput = userText.toLowerCase();
+    let botReply = "That's a great question! I'm not quite sure about the answer yet. Could you try asking in a different way? 😅";
 
-    // Find reply from object
+    // Keyword matching logic
+    // This loops through our replies and looks for keywords within the user's sentence
     for (let key in replies) {
-        if (text.includes(key)) {
+        if (lowerInput.includes(key)) {
             botReply = replies[key];
             break;
         }
     }
 
-    // Display Bot message
+    // Display Bot bubble
     chatBox.innerHTML += `
-        <div style="text-align:left; margin:10px;">
-            <span style="background:#eeeeee; padding:8px 12px; border-radius:15px; display: inline-block; max-width: 70%;">
+        <div style="text-align:left; margin-bottom: 15px;">
+            <span style="background:#f3f4f6; color: #374151; padding:10px 14px; border-radius:15px; display: inline-block; max-width: 80%; border: 1px solid #e5e7eb;">
                 ${botReply}
             </span>
         </div>
@@ -150,7 +114,7 @@ function sendMessage() {
 
     chatBox.scrollTop = chatBox.scrollHeight;
 
-    // 🔊 Bot voice output
+    // Voice output
     window.speechSynthesis.cancel();
     const speech = new SpeechSynthesisUtterance(botReply);
     speech.lang = "en-US";
@@ -159,32 +123,25 @@ function sendMessage() {
     input.value = "";
 }
 
-// Allow "Enter" key to send message
-document.getElementById("userInput").addEventListener("keypress", function(event) {
-    if (event.key === "Enter") {
-        sendMessage();
-    }
+// Enter key functionality
+document.getElementById("userInput").addEventListener("keypress", (e) => {
+    if (e.key === "Enter") sendMessage();
 });
 
-// 🎤 Voice Input
+// Speech Recognition
 function startVoice() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
-        alert("Voice recognition not supported in this browser");
+        alert("Voice recognition is not supported in this browser.");
         return;
     }
-
     const recognition = new SpeechRecognition();
     recognition.lang = "en-US";
     recognition.start();
 
-    recognition.onresult = function (event) {
+    recognition.onresult = (event) => {
         document.getElementById("userInput").value = event.results[0][0].transcript;
         sendMessage();
-    };
-
-    recognition.onerror = function () {
-        alert("Voice error. Please try again.");
     };
 }
 </script>
